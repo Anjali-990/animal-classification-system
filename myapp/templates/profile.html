@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% block main %}
+
+
+<div class="container-fluid mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card shadow-lg border-0">
+
+        <div class="card-header bg-success text-white fs-4">
+          <i class="fa-solid fa-user"></i> User Profile
+        </div>
+
+        <div class="card-body">
+
+          {% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="row">
+
+              <!-- LEFT : USER INFO -->
+              <div class="col-md-7 border-end">
+                <h5 class="mb-3 text-success">Account Information</h5>
+
+                <!-- Name -->
+                <div class="mb-3">
+                  <label class="form-label text-success">Full Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="name"
+                    value="{{ user.first_name }}"
+                    placeholder="Enter your name"
+                  />
+                </div>
+
+                <!-- Username -->
+                <div class="mb-3">
+                  <label class="form-label text-success">Username</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="username"
+                    value="{{ user.username }}"
+                    required
+                  />
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                  <label class="form-label text-success">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    name="email"
+                    value="{{ user.email }}"
+                    required
+                  />
+                </div>
+
+              </div>
+
+
+              <!-- RIGHT : PROFILE IMAGE -->
+              <div class="col-md-5 text-center">
+  <h5 class="mb-3 text-success">Profile Picture</h5>
+
+  <div class="position-relative d-inline-block">
+
+    {% if profile.profile_pic %}
+    <img
+      src="{{ profile.profile_pic.url }}"
+      id="profilePreview"
+      class="rounded-circle shadow"
+      style="width:200px;height:200px;object-fit:cover"
+    >
+    {% else %}
+    <img
+      src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+      id="profilePreview"
+      class="rounded-circle shadow"
+      style="width:200px;height:200px"
+    >
+    {% endif %}
+
+    <!-- Upload Icon -->
+    <label for="profile_pic" class="position-absolute bottom-0 end-0 bg-success text-white rounded-circle p-2" style="cursor:pointer">
+      <i class="fa-solid fa-camera"></i>
+    </label>
+
+    <!-- Hidden File Input -->
+    <input
+      type="file"
+      name="profile_pic"
+      id="profile_pic"
+      class="d-none"
+      onchange="previewImage(event)"
+    >
+
+  </div>
+
+</div>
+            </div>
+
+            <hr>
+
+            <div class="text-center">
+              <button type="submit" class="btn btn-success px-4">
+                <i class="fa-solid fa-user-pen"></i> Update Profile
+              </button>
+            </div>
+
+          </form>
+
+          
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt-4">
+  <div class="row justify-content-center">
+    <h4 class="mt-4 text-success bg-success text-white fs-4">
+          <i class="fa-solid fa-chart-line"></i> Statistics </h4>
+        
+<div class="row text-center mt-3">
+
+  <div class="col-md-3">
+    <div class="card shadow-sm p-3">
+      <h5 class="text-success"> <i class="fa-solid fa-upload"></i> Total Uploads</h5>
+      <h3 >{{ total_uploads }}</h3>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+  <div class="card shadow-sm p-3">
+    <h5 class="text-success "> <i class="fa-solid fa-hippo text-success"></i> Buffalo Predictions</h5>
+    <h3>{{ buffalo_predictions }}</h3>
+  </div>
+</div>
+
+<div class="col-md-3">
+  <div class="card shadow-sm p-3">
+    <h5 class="text-success"> <i class="fa-solid fa-cow"></i> Cow Predictions</h5>
+    <h3>{{ cow_predictions }}</h3>
+  </div>
+</div>
+  <div class="col-md-3">
+    <div class="card shadow-sm p-3">
+      <h5 class="text-success"> <i class="fa-solid fa-chart-simple"></i> Avg Confidence</h5>
+      <h3>
+        {% if avg_confidence %}
+        {{ avg_confidence|floatformat:2 }}%
+        {% else %}
+        0%
+        {% endif %}
+      </h3>
+    </div>
+  </div>
+
+</div>
+  </div>
+  </div>
+</div>
+<script>
+function previewImage(event){
+    const reader = new FileReader();
+    reader.onload = function(){
+        document.getElementById('profilePreview').src = reader.result;
+    }
+    reader.readAsDataURL(event.target.files[0]);
+}
+setTimeout(function(){
+    let alert = document.querySelector('.alert');
+    if(alert){
+        alert.style.display = 'none';
+    }
+},3000);
+</script>
+{% endblock %}

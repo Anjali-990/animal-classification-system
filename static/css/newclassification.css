@@ -1,0 +1,18 @@
+.classification-section {
+  background-color: #f5f7fa;
+  min-height: 80vh;
+}
+
+.card {
+  border-radius: 1rem;
+  background-color: #fff;
+}
+
+#previewImage {
+  object-fit: cover;
+  margin-top: 10px;
+}
+
+.btn-success {
+  border-radius: 2rem;
+}

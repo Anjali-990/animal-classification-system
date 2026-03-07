@@ -1,0 +1,16 @@
+.about-section {
+  background: #f8f9fa;
+}
+
+.about-section h1 {
+  font-weight: 700;
+  color: #343a40;
+}
+
+.card i {
+  transition: transform 0.3s;
+}
+
+.card:hover i {
+  transform: scale(1.2);
+}

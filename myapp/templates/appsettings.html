@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block main %}
+
+<div class="container my-5">
+  
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-success text-white fs-4">
+          App Settings
+        </div>
+        {% if messages %}
+{% for message in messages %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+{{ message }}
+</div>
+{% endfor %}
+{% endif %}
+        <div class="card-body">
+          <form method="post">
+            {% csrf_token %}
+            <!-- Theme Setting -->
+            <div class="mb-3">
+              <label for="theme" class="form-label text-success">Theme</label>
+              <select class="form-select" id="theme" name="theme">
+                <option value="light" {% if user.userprofile.theme == 'light' %}selected{% endif %}>Light</option>
+                <option value="dark" {% if user.userprofile.theme == 'dark' %}selected{% endif %}>Dark</option>
+              </select>
+            </div>
+
+            <!-- Notifications -->
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input bg-success" id="notifications" name="notifications" {% if user.userprofile.notifications %}checked{% endif %}>
+              <label class="form-check-label text-success" for="notifications">Enable Notifications</label>
+            </div>
+
+            <!-- Language -->
+            <div class="mb-3">
+              <label for="language" class="form-label text-success">Language</label>
+              <select class="form-select" id="language" name="language">
+                <option value="en" {% if user.userprofile.language == 'en' %}selected{% endif %}>English</option>
+                <option value="hi" {% if user.userprofile.language == 'hi' %}selected{% endif %}>Hindi</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-success">
+              <i class="fa-solid fa-floppy-disk"></i> Save Settings
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  setTimeout(function(){
+    let alert = document.querySelector('.alert');
+    if(alert){
+        alert.style.display = 'none';
+    }
+},3000);
+</script>
+{% endblock %}

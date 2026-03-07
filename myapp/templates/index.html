@@ -1,0 +1,144 @@
+{% extends "base.html" %} {% load static %} {% block main %}
+<style>
+.hero-section {
+  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+    url("{% static 'images/wall.jpeg' %}") center/cover;
+  height: 80vh;
+}
+.hero-section h1 {
+  font-size: 3rem;
+}
+.hero-section p {
+  font-size: 1.25rem;
+}
+.hero-section h1 {
+    font-size: 3rem;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+    animation: fadeInDown 1.2s ease-out;
+}
+
+.hero-section p {
+    animation: fadeInUp 1.5s ease-out;
+}
+@keyframes fadeInDown {
+    0% { opacity:0; transform: translateY(-20px);}
+    100% { opacity:1; transform: translateY(0);}
+}
+@keyframes fadeInUp {
+    0% { opacity:0; transform: translateY(20px);}
+    100% { opacity:1; transform: translateY(0);}
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    transition: 0.3s;
+}
+</style>
+<!-- Main Image -->
+
+<section
+  class="hero-section text-center text-light d-flex align-items-center justify-content-center"
+>
+  <div>
+    <h1 class="fw-bold">Animal Type Classification for Buffalo and Cattle</h1>
+    <p class="lead">Upload an image to identify the animal type instantly.</p>
+    <a href="{% url 'newclassification' %}" class="btn btn-success btn-lg mt-3">Get Started</a>
+  </div>
+</section>
+
+<section class="py-5 bg-light">
+  <div class="container text-center">
+    <h2 class="mb-5 text-success">AI Model Performance</h2>
+
+    <div class="row">
+
+      <div class="col-md-3 mb-4">
+        <div class="card shadow-sm border-0 p-4">
+          <i class="fa-solid fa-brain fa-2x text-primary mb-2"></i>
+          <h3 class="fw-bold counter" data-target="94">0</h3>
+          <p class="text-muted">Model Accuracy</p>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-4">
+        <div class="card shadow-sm border-0 p-4">
+          <i class="fa-solid fa-images fa-2x text-success mb-2"></i>
+          <h3 class="fw-bold">2000+</h3>
+          <p class="text-muted">Training Images</p>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-4">
+        <div class="card shadow-sm border-0 p-4">
+          <i class="fa-solid fa-paw fa-2x text-warning mb-2"></i>
+          <h3 class="fw-bold">2</h3>
+          <p class="text-muted">Animal Classes</p>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-4">
+        <div class="card shadow-sm border-0 p-4">
+          <i class="fa-solid fa-clock fa-2x text-danger mb-2"></i>
+          <h3 class="fw-bold">Instant</h3>
+          <p class="text-muted">Prediction Speed</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="py-5">
+  <div class="container text-center">
+    <h2 class="mb-5 text-success">Why Use Our AI Classifier?</h2>
+
+    <div class="row">
+
+      <div class="col-md-4">
+        <i class="fa-solid fa-robot fa-3x text-primary mb-3"></i>
+        <h5>AI Powered</h5>
+        <p class="text-muted">
+          Uses a trained deep learning model to classify animals accurately.
+        </p>
+      </div>
+
+      <div class="col-md-4">
+        <i class="fa-solid fa-bolt fa-3x text-warning mb-3"></i>
+        <h5>Instant Results</h5>
+        <p class="text-muted">
+          Upload an image and get classification results instantly.
+        </p>
+      </div>
+
+      <div class="col-md-4">
+        <i class="fa-solid fa-database fa-3x text-success mb-3"></i>
+        <h5>History Tracking</h5>
+        <p class="text-muted">
+          All previous classifications are stored for future reference.
+        </p>
+      </div>
+      <div class="text-center mt-4">
+    <a href="{% url 'newclassification' %}" class="btn btn-success btn-lg">Try Now</a>
+</div>
+    </div>
+  </div>
+</section>
+
+<script>
+const counters = document.querySelectorAll('.counter');
+counters.forEach(counter => {
+  const updateCount = () => {
+    const target = +counter.getAttribute('data-target');
+    const count = +counter.innerText;
+    const inc = target / 100; 
+    if(count < target) {
+      counter.innerText = Math.ceil(count + inc);
+      setTimeout(updateCount, 20);
+    } else {
+      counter.innerText = target;
+    }
+  };
+  updateCount();
+});
+</script>
+{% endblock main %}
