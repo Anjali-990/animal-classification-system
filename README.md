@@ -137,7 +137,7 @@ Steps:
 
 ##  Dataset
 
-Animal image dataset used for training the CNN model.
+Animal image dataset used for training the model.
 
 Dataset folder is excluded from GitHub because of large size.
 
